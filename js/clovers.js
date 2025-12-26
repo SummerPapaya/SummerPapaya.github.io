@@ -82,7 +82,7 @@
   function c(t, i) {
     for (var n in i) t.style[n] = i[n];
   }
-  var r = ["#8def8dff", "#439b62ff", "#54c949ff", "#1a8825ff"],
+  var r = ["#9fe778ff", "#75d55dff", "#61e340ff", "#1a8825ff"],
     d = window.innerWidth,
     f = (window.innerHeight, { x: d / 2, y: d / 2 }),
     u = [];
