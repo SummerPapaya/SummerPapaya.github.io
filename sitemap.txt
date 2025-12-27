@@ -1,3 +1,4 @@
+http://example.com/podcast/index.html
 http://example.com/2025/12/14/hello-world/
 http://example.com/2025/12/16/Welcome-to-Summer-Town/
 http://example.com/about/index.html
