@@ -1,7 +1,8 @@
+http://example.com/2025/12/31/HappyNewYear2026/
+http://example.com/podcast/index.html
 http://example.com/about/index.html
 http://example.com/2025/12/14/hello-world/
 http://example.com/2025/12/16/Welcome-to-Summer-Town/
-http://example.com/podcast/index.html
 http://example.com/public/2025/12/14/hello-world/index.html
 http://example.com/public/404.html
 http://example.com/public/index.html
@@ -14,4 +15,5 @@ http://example.com/public/about/index.html
 http://example.com/public/archives/2025/index.html
 http://example.com/
 http://example.com/tags/Test/
+http://example.com/tags/%E5%B0%8F%E7%81%AB%E8%8A%B1%E5%84%BF/
 http://example.com/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/
