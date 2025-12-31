@@ -9,11 +9,12 @@ jQuery(document).ready(function($) {
         y = e.pageY;
         $i.css({
             "z-index": 5,
-            "top": y - 20,
-            "left": x,
+            "top": y - 15,
+            "left": x - 5,
             "position": "absolute",
             "font-weight": "bold",
-            "color": "#1FB86E"
+            "color": "#1FB86E",
+            "font-size": "12px"
         });
         $("body").append($i);
         $i.animate({

@@ -39,22 +39,22 @@
   }
   function l() {
     (this.character = "☘︎"),
-      (this.lifeSpan = 100),
+      (this.lifeSpan = 120),
       (this.initialStyles = {
         position: "fixed",
         top: "0",
         display: "block",
         pointerEvents: "none",
         "z-index": "10000000",
-        fontSize: "20px",
+        fontSize: "15px",
         "will-change": "transform",
       }),
       (this.init = function (t, i, n) {
         (this.velocity = {
-          x: (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
+          x: (Math.random() < 1 ? -1 : 1) * (Math.random() / 2),
           y: 1,
         }),
-          (this.position = { x: t - 10, y: i - 20 }),
+          (this.position = { x: t - 5, y: i - 15 }),
           (this.initialStyles.color = n),
           (this.element = document.createElement("span")),
           (this.element.innerHTML = this.character),
