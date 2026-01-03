@@ -3,11 +3,11 @@
   <title>夏天镇 SummerTown</title>
   
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://summerpapaya.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://summerpapaya.github.io/"/>
   <updated>2026-01-03T11:49:48.437Z</updated>
-  <id>http://example.com/</id>
+  <id>https://summerpapaya.github.io/</id>
   
   <author>
     <name>Summer</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>新年快乐</title>
-    <link href="http://example.com/2025/12/31/HappyNewYear2026/"/>
-    <id>http://example.com/2025/12/31/HappyNewYear2026/</id>
+    <link href="https://summerpapaya.github.io/2025/12/31/HappyNewYear2026/"/>
+    <id>https://summerpapaya.github.io/2025/12/31/HappyNewYear2026/</id>
     <published>2025-12-31T10:39:52.000Z</published>
     <updated>2026-01-03T11:49:48.437Z</updated>
     
@@ -30,19 +30,19 @@
     
     
     
-    <category term="部落格" scheme="http://example.com/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
+    <category term="部落格" scheme="https://summerpapaya.github.io/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
     
     
-    <category term="Test" scheme="http://example.com/tags/Test/"/>
+    <category term="Test" scheme="https://summerpapaya.github.io/tags/Test/"/>
     
-    <category term="小火花儿" scheme="http://example.com/tags/%E5%B0%8F%E7%81%AB%E8%8A%B1%E5%84%BF/"/>
+    <category term="小火花儿" scheme="https://summerpapaya.github.io/tags/%E5%B0%8F%E7%81%AB%E8%8A%B1%E5%84%BF/"/>
     
   </entry>
   
   <entry>
     <title>Welcome to Summer Town</title>
-    <link href="http://example.com/2025/12/16/Welcome-to-Summer-Town/"/>
-    <id>http://example.com/2025/12/16/Welcome-to-Summer-Town/</id>
+    <link href="https://summerpapaya.github.io/2025/12/16/Welcome-to-Summer-Town/"/>
+    <id>https://summerpapaya.github.io/2025/12/16/Welcome-to-Summer-Town/</id>
     <published>2025-12-16T07:20:47.000Z</published>
     <updated>2025-12-27T15:46:21.893Z</updated>
     
@@ -53,17 +53,17 @@
     
     
     
-    <category term="部落格" scheme="http://example.com/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
+    <category term="部落格" scheme="https://summerpapaya.github.io/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
     
     
-    <category term="Test" scheme="http://example.com/tags/Test/"/>
+    <category term="Test" scheme="https://summerpapaya.github.io/tags/Test/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://example.com/2025/12/14/hello-world/"/>
-    <id>http://example.com/2025/12/14/hello-world/</id>
+    <link href="https://summerpapaya.github.io/2025/12/14/hello-world/"/>
+    <id>https://summerpapaya.github.io/2025/12/14/hello-world/</id>
     <published>2025-12-14T14:46:28.934Z</published>
     <updated>2025-12-27T15:49:12.892Z</updated>
     
@@ -74,10 +74,10 @@
     
     
     
-    <category term="部落格" scheme="http://example.com/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
+    <category term="部落格" scheme="https://summerpapaya.github.io/categories/%E9%83%A8%E8%90%BD%E6%A0%BC/"/>
     
     
-    <category term="Test" scheme="http://example.com/tags/Test/"/>
+    <category term="Test" scheme="https://summerpapaya.github.io/tags/Test/"/>
     
   </entry>
   
