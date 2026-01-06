@@ -1,0 +1,44 @@
+/* 修改waline样式 */
+/* 修改评论框外观 */
+.wl-panel {
+    border-radius: 4px !important;
+}
+
+:root {
+    --waline-bgcolor-light: transparent !important;
+}
+
+.wl-btn {
+    border-radius: 0.3em !important;
+}
+
+/* 添加miku的gif为输入区域背景 */
+#wl-edit {
+    background: url("/img/neko5.gif") 100% 100% no-repeat;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: right bottom !important; 
+}
+
+#waline-wrap textarea:focus {
+    background: url("/img/neko5.gif") 100% 100% no-repeat;
+    background-position-y: 78px !important;
+    transition: all 0.25s ease-in-out 0s;
+}
+
+/* 修改评论区内容背景 */
+.wl-card .wl-content {
+    background: #ffffff;
+    padding: 16px !important;
+    margin: 12px 0 8px !important;
+    border-radius: 3px;
+}
+
+.wl-card {
+    border-bottom: none !important;
+    padding-bottom: 0px !important;
+}
+
+.wl-cards .wl-item{
+    padding: .5em .5em 0px !important;
+}
