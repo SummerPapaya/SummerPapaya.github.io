@@ -14,14 +14,14 @@
 
 /* 添加miku的gif为输入区域背景 */
 #wl-edit {
-    background: url("/img/neko5.gif") 100% 100% no-repeat;
+    background: url("/img/neko9.gif") 100% 100% no-repeat;
     background-size: contain !important;
     background-repeat: no-repeat !important;
     background-position: right bottom !important; 
 }
 
 #waline-wrap textarea:focus {
-    background: url("/img/neko5.gif") 100% 100% no-repeat;
+    background: url("/img/neko9.gif") 100% 100% no-repeat;
     background-position-y: 78px !important;
     transition: all 0.25s ease-in-out 0s;
 }
