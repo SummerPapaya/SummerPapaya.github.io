@@ -1,4 +1,4 @@
-  function getbyclassname(tagname,classname){//Í¨¹ıÀàÃû»ñÈ¡ÔªËØº¯Êı£¬²ÎÊıÎª¸¸ÔªËØ¡¢ÀàÃû£¬·µ»ØÖµÎªÔªËØÊı×é
+  function getbyclassname(tagname,classname){//Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ôªï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ôªï¿½Ø¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÎªÔªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   var result=new Array();
   var allclass=document.getElementsByTagName(tagname);
   for (var i=0; i<allclass.length;i++ )
@@ -11,10 +11,10 @@
   }
 
 function win(attr)
-{//»ñÈ¡¿ÉÊÓÇø³ß´ç£¬²ÎÊıÎªheight|width
+{//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß´ç£¬ï¿½ï¿½ï¿½ï¿½Îªheight|width
 	switch(attr)
 		{           
-			case 'height'://»ñÈ¡´°¿Ú¸ß¶È
+			case 'height'://ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ú¸ß¶ï¿½
              if (window.innerHeight)
 			{
                    winHeight = window.innerHeight;return winHeight;
@@ -26,12 +26,12 @@ function win(attr)
                  winHeight = document.documentElement.clientHeight;return winHeight;
              }
 			 break;
-			case 'width'://»ñÈ¡´°¿Ú¿í¶È
+			case 'width'://ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
 			  if (window.innerWidth){
                    winWidth = window.innerWidth;return winWidth;
 			  }else if ((document.body) && (document.body.clientWidth)){
                    winWidth = document.body.clientWidth;   return winWidth;          
-			  }//Í¨¹ıÉîÈëDocumentÄÚ²¿¶Ôbody½øĞĞ¼ì²â£¬»ñÈ¡´°¿Ú´óĞ¡
+			  }//Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Documentï¿½Ú²ï¿½ï¿½ï¿½bodyï¿½ï¿½ï¿½Ğ¼ï¿½â£¬ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ú´ï¿½Ğ¡
              if (document.documentElement  &&document.documentElement.clientWidth)
              {
                  winWidth = document.documentElement.clientWidth;return winWidth;
@@ -67,22 +67,47 @@ function win(attr)
 			re.push(parseInt(obj.currentStyle?obj.currentStyle[attr]:document.defaultView.getComputedStyle(obj, false)[attr]));return re;break;
 		}
 }
- function drag(obj){//ÊµÏÖÍÏ×§£¬²ÎÊıÎª¶ÔÏó
-	obj.onmousedown=function (ev){//°´ÏÂÊó±ê
-	var oev=ev||event;
-	var disX=oev.clientX-obj.offsetLeft;
-	var disY=oev.clientY-obj.offsetTop;
-	document.onmousemove=function (ev){//ÍÏ¶¯Êó±ê
-	var oev=ev||event;
-	var left=oev.clientX-disX;
-	var top=oev.clientY-disY;
-	obj.style.left=left+'px';//¸üĞÂ¶ÔÏóµÄÎ»ÖÃ
-	obj.style.top=top+'px';
-	}
-	document.onmouseup=function (){//Ì§ÆğÊó±ê
-	document.onmousemove=null;
-	document.onmouseup=null;
-	}
-	}
- }
+//åœ¨åŸæ¥çš„ä»£ç åŸºç¡€ä¸Šä¼˜åŒ–å·²é€‚åº”ç§»åŠ¨ç«¯çš„æ‹–æ‹½éœ€æ±‚
+function drag(obj) {
+    // ç»‘å®šæŒ‰ä¸‹äº‹ä»¶ (å…¼å®¹é¼ æ ‡å’Œè§¦æ‘¸)
+    obj.onmousedown = obj.ontouchstart = function (ev) {
+        // 1. è·å–äº‹ä»¶å¯¹è±¡å’Œåæ ‡
+        var oev = ev || event;
+        // å¦‚æœæ˜¯è§¦æ‘¸å±ï¼Œå–ç¬¬ä¸€ä¸ªæ‰‹æŒ‡çš„åæ ‡ï¼›å¦‚æœæ˜¯é¼ æ ‡ï¼Œå– clientX
+        var touch = oev.touches ? oev.touches[0] : oev;
+        
+        var disX = touch.clientX - obj.offsetLeft;
+        var disY = touch.clientY - obj.offsetTop;
+        
+        // æé«˜å½“å‰æ‹–åŠ¨å›¾ç‰‡çš„å±‚çº§
+        obj.style.zIndex = new Date().getTime();
+
+        // 2. ç»‘å®šç§»åŠ¨äº‹ä»¶
+        // æ³¨æ„ï¼šç§»åŠ¨å’ŒæŠ¬èµ·è¦ç»‘å®šåœ¨ document ä¸Šï¼Œé˜²æ­¢æ‰‹æŒ‡æ»‘å‡ºå…ƒç´ 
+        document.onmousemove = document.ontouchmove = function (ev) {
+            var oev = ev || event;
+            var touch = oev.touches ? oev.touches[0] : oev;
+            
+            var left = touch.clientX - disX;
+            var top = touch.clientY - disY;
+            
+            obj.style.left = left + 'px';
+            obj.style.top = top + 'px';
+
+            // 3. å…³é”®ï¼šé˜»æ­¢æ‰‹æœºç«¯æ‹–åŠ¨æ—¶çš„å±å¹•æ»šåŠ¨é»˜è®¤è¡Œä¸º
+            if (oev.preventDefault) {
+                oev.preventDefault();
+            }
+            return false;
+        };
+
+        // 4. ç»‘å®šæŠ¬èµ·äº‹ä»¶
+        document.onmouseup = document.ontouchend = function () {
+            document.onmousemove = document.ontouchmove = null;
+            document.onmouseup = document.ontouchend = null;
+        };
+        
+        return false;
+    };
+}
 
