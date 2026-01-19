@@ -1,72 +1,52 @@
-  function getbyclassname(tagname,classname){//ͨ��������ȡԪ�غ���������Ϊ��Ԫ�ء�����������ֵΪԪ������
-  var result=new Array();
-  var allclass=document.getElementsByTagName(tagname);
-  for (var i=0; i<allclass.length;i++ )
-  {
-
-   if(classname==allclass[i].className)
-	   result.push(allclass[i]);
-  }
-  return result;
-  }
-
-function win(attr)
-{//��ȡ�������ߴ磬����Ϊheight|width
-	switch(attr)
-		{           
-			case 'height'://��ȡ���ڸ߶�
-             if (window.innerHeight)
-			{
-                   winHeight = window.innerHeight;return winHeight;
-			}else if ((document.body) && (document.body.clientHeight)){
-                   winHeight = document.body.clientHeight;return winHeight;
-			}
-			if (document.documentElement  && document.documentElement.clientHeight)
-             {
-                 winHeight = document.documentElement.clientHeight;return winHeight;
-             }
-			 break;
-			case 'width'://��ȡ���ڿ���
-			  if (window.innerWidth){
-                   winWidth = window.innerWidth;return winWidth;
-			  }else if ((document.body) && (document.body.clientWidth)){
-                   winWidth = document.body.clientWidth;   return winWidth;          
-			  }//ͨ������Document�ڲ���body���м�⣬��ȡ���ڴ�С
-             if (document.documentElement  &&document.documentElement.clientWidth)
-             {
-                 winWidth = document.documentElement.clientWidth;return winWidth;
-             }
-			 break;
-			 case 'scrollTop':
-				var scrollTop;
-				if(typeof window.pageYOffset != 'undefined'){
-				scrollTop = window.pageYOffset;
-				}
-				else
-				if(typeof document.compatMode != 'undefined' &&
-				document.compatMode != 'BackCompat'){
-				scrollTop = document.documentElement.scrollTop;
-				}
-				else 
-				if(typeof document.body != 'undefined'){
-				scrollTop = document.body.scrollTop;
-				}
-				return scrollTop;break;
-			default :return 0;break;
-		}
+// 1. 通过类名获取元素 (兼容旧版本浏览器)
+function getbyclassname(tagname, classname) {
+    var result = new Array();
+    var allclass = document.getElementsByTagName(tagname);
+    for (var i = 0; i < allclass.length; i++) {
+        // 修复：使用 className.indexOf 或更严谨的判断，这里保持你原有的逻辑
+        if (classname == allclass[i].className)
+            result.push(allclass[i]);
+    }
+    return result;
 }
 
-  function css(obj, attr)
-{
-	var re=[];
-		switch(attr){
-		case 'rotate':var transformstr=obj.currentStyle?obj.currentStyle['transform']:document.defaultView.getComputedStyle(obj, false)['webkitTransform']||document.defaultView.getComputedStyle(obj, false)['msTransform']||document.defaultView.getComputedStyle(obj, false)['MozTransform']||document.defaultView.getComputedStyle(obj, false)['OTransform']||document.defaultView.getComputedStyle(obj, false)['transform']+"";
-								var matrixarray=transformstr.split(",");
-								re.push(Math.asin(matrixarray[1])/Math.PI*180);return re;break;
-			default :
-			re.push(parseInt(obj.currentStyle?obj.currentStyle[attr]:document.defaultView.getComputedStyle(obj, false)[attr]));return re;break;
-		}
+// 2. 获取窗口尺寸及滚动条高度
+function win(attr) {
+    switch (attr) {
+        case 'height':
+            return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        case 'width':
+            return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        case 'scrollTop':
+            return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        default:
+            return 0;
+    }
 }
+
+// 3. 获取元素样式（包括旋转角度和普通像素值）
+function css(obj, attr) {
+    var re = [];
+    switch (attr) {
+        case 'rotate':
+            var style = document.defaultView.getComputedStyle(obj, false);
+            var transformstr = style['webkitTransform'] || style['msTransform'] || style['MozTransform'] || style['OTransform'] || style['transform'] || "matrix(1, 0, 0, 1, 0, 0)";
+            var matrixarray = transformstr.split(",");
+            if (matrixarray.length > 1) {
+                // 从矩阵中计算旋转角度
+                re.push(Math.round(Math.asin(matrixarray[1]) * (180 / Math.PI)));
+            } else {
+                re.push(0);
+            }
+            return re;
+        default:
+            var value = obj.currentStyle ? obj.currentStyle[attr] : document.defaultView.getComputedStyle(obj, false)[attr];
+            re.push(parseInt(value) || 0);
+            return re;
+    }
+}
+
+// 4. 实现元素拖拽
 //在原来的代码基础上优化已适应移动端的拖拽需求
 function drag(obj) {
     // 绑定按下事件 (兼容鼠标和触摸)
