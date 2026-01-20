@@ -12,43 +12,39 @@
             width: 100vw; 
             height: 100vh;
             font-family: cursive, STXingKai, "微软雅黑", sans-serif;
+            touch-action: none; /* 关键：禁止手机浏览器默认手势，确保拖拽流畅 */
         }
 
         .polaroid {
             padding: 10px 10px 20px 10px;
             background: #FFF;
             text-align: center;
-            width: 200px; /* 初始小图宽度 */
+            width: 200px; 
             position: absolute;
             cursor: grab;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            /* 过渡动画 */
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            user-select: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             z-index: 1;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
-        .polaroid img { width: 100%; height: auto; display: block; pointer-events: none; }
-        .polaroid p { margin-top: 10px; font-size: 12px; color: #333; }
+        .polaroid img { width: 100%; height: auto; pointer-events: none; }
+        .polaroid p { margin-top: 10px; font-size: 12px; color: #333; pointer-events: none; }
 
-        /* 遮罩层 */
-        .cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
-
-        /* 【核心：放大状态】 */
-        /* 使用 fixed 定位可以无视父级的 left/top 干扰，强制居中 */
+        /* 放大状态：强行覆盖所有定位 */
         .polaroid.active {
-            position: fixed !important;
-            width: 500px !important; /* 放大后的具体宽度 */
+            width: 80vw !important; /* 手机端自适应宽度 */
+            max-width: 450px !important;
             left: 50% !important;
             top: 50% !important;
-            /* 必须包含 translate 来实现真正的居中 */
             transform: translate(-50%, -50%) rotate(0deg) !important;
             z-index: 9999 !important;
             cursor: zoom-out;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
         }
 
-        .polaroid:active { cursor: grabbing; }
+        .cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
     </style>
 </head>
 <body>
@@ -126,102 +122,102 @@
     </div>
     <!-- 以上为添加照片的区域 -->
 
-<script type="text/javascript">
+<script>
 window.onload = function () {
-    var photos = document.querySelectorAll('.polaroid');
-    var highestZ = 100;
+    const photos = document.querySelectorAll('.polaroid');
+    let highestZ = 100;
 
-    photos.forEach(function(el) {
-        initPhoto(el);
-    });
+    photos.forEach(el => initPhoto(el));
 
     function initPhoto(el) {
-        // 初始化随机位置
-        resetToRandom(el);
+        // 初始随机位置
+        setRandomPosition(el);
 
-        var isMoving = false;
-        var startX, startY;
-        var startTime;
-        var cover = el.querySelector('.cover');
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+        let startTime;
 
-        // 鼠标按下逻辑
-        cover.onmousedown = function (e) {
+        // 处理开始交互（兼容鼠标和手指）
+        const startAction = (e) => {
             if (el.classList.contains('active')) return;
-
-            isMoving = false;
+            
+            const event = e.type.includes('touch') ? e.touches[0] : e;
+            isDragging = false;
             startTime = Date.now();
             el.style.zIndex = ++highestZ;
-            
-            startX = e.clientX;
-            startY = e.clientY;
-            var initialLeft = el.offsetLeft;
-            var initialTop = el.offsetTop;
+            el.style.transition = 'none'; // 拖动时关闭动画
 
-            // 拖拽时关闭动画
-            el.style.transition = 'none';
+            startX = event.clientX;
+            startY = event.clientY;
+            initialLeft = el.offsetLeft;
+            initialTop = el.offsetTop;
 
-            document.onmousemove = function (e) {
-                var dx = e.clientX - startX;
-                var dy = e.clientY - startY;
+            const moveAction = (me) => {
+                const moveEvent = me.type.includes('touch') ? me.touches[0] : me;
+                const dx = moveEvent.clientX - startX;
+                const dy = moveEvent.clientY - startY;
+
                 if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-                    isMoving = true;
+                    isDragging = true;
                     el.style.left = (initialLeft + dx) + 'px';
                     el.style.top = (initialTop + dy) + 'px';
                 }
             };
 
-            document.onmouseup = function () {
-                document.onmousemove = null;
-                document.onmouseup = null;
-                el.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1)';
-
-                var duration = Date.now() - startTime;
-                if (duration < 250 && !isMoving) {
+            const endAction = () => {
+                document.removeEventListener(e.type.includes('touch') ? 'touchmove' : 'mousemove', moveAction);
+                document.removeEventListener(e.type.includes('touch') ? 'touchend' : 'mouseup', endAction);
+                
+                el.style.transition = 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                
+                // 判断点击还是拖动
+                if (Date.now() - startTime < 250 && !isDragging) {
                     toggleZoom(el);
                 }
             };
+
+            document.addEventListener(e.type.includes('touch') ? 'touchmove' : 'mousemove', moveAction, {passive: false});
+            document.addEventListener(e.type.includes('touch') ? 'touchend' : 'mouseup', endAction);
         };
 
+        el.addEventListener('mousedown', startAction);
+        el.addEventListener('touchstart', startAction, {passive: false});
+
         // 放大状态点击缩小
-        el.onclick = function() {
-            if (this.classList.contains('active')) {
-                toggleZoom(this);
-            }
-        };
+        el.addEventListener('click', () => {
+            if (el.classList.contains('active')) toggleZoom(el);
+        });
     }
 
     function toggleZoom(el) {
         if (el.classList.contains('active')) {
-            // 【缩小逻辑】
             el.classList.remove('active');
-            // 恢复随机姿态
-            resetToRandom(el);
+            setRandomPosition(el); // 缩小后重新随机位置，避免全部堆叠在中央
         } else {
-            // 【放大逻辑】
-            // 1. 先把其他已经在放大的关掉
-            document.querySelectorAll('.polaroid.active').forEach(function(item) {
-                item.classList.remove('active');
-                resetToRandom(item);
+            // 先缩小其他
+            document.querySelectorAll('.polaroid.active').forEach(other => {
+                other.classList.remove('active');
+                setRandomPosition(other);
             });
             
-            // 2. 关键：清除 JS 设置的行内 transform，否则 CSS 的 translate 会失效
-            el.style.transform = ''; 
-            // 3. 激活 CSS 类
+            // 【关键点】放大前清除行内定位，让 CSS 的 left:50% 和 translate 生效
+            el.style.left = '';
+            el.style.top = '';
+            el.style.transform = '';
             el.classList.add('active');
         }
     }
 
-    function resetToRandom(el) {
-        var winW = window.innerWidth;
-        var winH = window.innerHeight;
-        var left = Math.random() * (winW - 160);
-        var top = Math.random() * (winH - 200);
-        var deg = (Math.random() - 0.5) * 40; 
+    function setRandomPosition(el) {
+        const winW = window.innerWidth;
+        const winH = window.innerHeight;
+        const l = Math.random() * (winW - 150);
+        const t = Math.random() * (winH - 200);
+        const r = (Math.random() - 0.5) * 40;
         
-        // 重新赋值行内样式
-        el.style.left = left + 'px';
-        el.style.top = top + 'px';
-        el.style.transform = 'rotate(' + deg + 'deg)';
+        el.style.left = l + 'px';
+        el.style.top = t + 'px';
+        el.style.transform = `rotate(${r}deg)`;
     }
 };
 </script>
