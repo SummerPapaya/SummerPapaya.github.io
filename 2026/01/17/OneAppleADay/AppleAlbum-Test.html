@@ -19,11 +19,12 @@
             padding: 10px 10px 20px 10px;
             background: #FFF;
             text-align: center;
-            width: 200px; 
+            width: 150px; 
             position: absolute;
             cursor: grab;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            /* 平滑过渡：放大和恢复时使用 */
+            transition: width 0.4s ease, transform 0.4s ease, top 0.4s ease, left 0.4s ease;
             z-index: 1;
             user-select: none;
             -webkit-user-drag: none;
@@ -32,16 +33,16 @@
         .polaroid img { width: 100%; height: auto; pointer-events: none; }
         .polaroid p { margin-top: 10px; font-size: 12px; color: #333; pointer-events: none; }
 
-        /* 放大状态：强行覆盖所有定位 */
+        /* 放大状态样式 */
         .polaroid.active {
-            width: 80vw !important; /* 手机端自适应宽度 */
+            width: 85vw !important;
             max-width: 450px !important;
             left: 50% !important;
             top: 50% !important;
             transform: translate(-50%, -50%) rotate(0deg) !important;
             z-index: 9999 !important;
             cursor: zoom-out;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.8);
         }
 
         .cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
@@ -50,75 +51,88 @@
 <body>
 
     <!-- 手动添加照片和简介： -->
-        <div class="polaroid">
-    <div class="cover"></div>
-    <img src="img/1.png" alt="" loading="lazy"/>
-    <p>一颗傍晚的苹果<br>2025.12.18</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/2.png" alt="" loading="lazy"/>
-    <p>一颗看夕阳的苹果<br>2025.12.19</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/3.png" alt="" loading="lazy"/>
-    <p>一颗雾霾天的苹果<br>2025.12.20</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/4.png" alt="" loading="lazy"/>
-    <p>一颗i苹果<br>2025.12.21</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/5.png" alt="" loading="lazy"/>
-    <p>一颗比真苹果还要苹果的蛋糕苹果（右边）<br>2025.12.22</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/6.png" alt="" loading="lazy"/>
-    <p>一颗小猫苹果<br>2025.12.23</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/7.png" alt="" loading="lazy"/>
-    <p>一颗小狗苹果<br>2025.12.24</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/8.png" alt="" loading="lazy"/>
-    <p>一颗小鹿苹果<br>2025.12.25</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/9.png" alt="" loading="lazy"/>
-    <p>一颗有知识的苹果<br>2025.12.26</p>
-    </div>
-        <div class="polaroid">
-        <div class="cover"></div>
-    <img src="img/10.png" alt="" loading="lazy"/>
-    <p>一颗有思想的苹果<br>2025.12.27</p>
-    </div>
     <div class="polaroid">
         <div class="cover"></div>
-    <img src="img/11.png" alt="" loading="lazy"/>
-    <p>一颗形状不羁但不妨碍ta依然很甜的苹果<br>2025.12.28</p>
+        <img src="img/1.png" alt="" loading="lazy"/>
+        <p>一颗傍晚的苹果<br>2025.12.18</p>
     </div>
-        <div class="polaroid">
+
+    <div class="polaroid">
         <div class="cover"></div>
-    <img src="img/12.png" alt="" loading="lazy"/>
-    <p>一颗浑圆饱满的苹果<br>（而我依旧一筹莫展）<br>2025.12.29</p>
+        <img src="img/2.png" alt="" loading="lazy"/>
+        <p>一颗看夕阳的苹果<br>2025.12.19</p>
     </div>
-        <div class="polaroid">
+
+    <div class="polaroid">
         <div class="cover"></div>
-    <img src="img/13.png" alt="" loading="lazy"/>
-    <p>一颗水灵灵的苹果<br>2025.12.30</p>
+        <img src="img/3.png" alt="" loading="lazy"/>
+        <p>一颗雾霾天的苹果<br>2025.12.20</p>
     </div>
-        <div class="polaroid">
+
+    <div class="polaroid">
         <div class="cover"></div>
-    <img src="img/14.png" alt="" loading="lazy"/>
-    <p>一颗有大理石花纹的苹果<br>2025.12.31</p>
+        <img src="img/4.png" alt="" loading="lazy"/>
+        <p>一颗i苹果<br>2025.12.21</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/5.png" alt="" loading="lazy"/>
+        <p>一颗比真苹果还要苹果的蛋糕苹果（右边）<br>2025.12.22</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/6.png" alt="" loading="lazy"/>
+        <p>一颗小猫苹果<br>2025.12.23</p>
+    </div>
+
+     <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/7.png" alt="" loading="lazy"/>
+        <p>一颗小狗苹果<br>2025.12.24</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/8.png" alt="" loading="lazy"/>
+        <p>一颗小鹿苹果<br>2025.12.25</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/9.png" alt="" loading="lazy"/>
+        <p>一颗有知识的苹果<br>2025.12.26</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/10.png" alt="" loading="lazy"/>
+        <p>一颗有思想的苹果<br>2025.12.27</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/11.png" alt="" loading="lazy"/>
+        <p>一颗形状不羁但不妨碍ta依然很甜的苹果<br>2025.12.28</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/12.png" alt="" loading="lazy"/>
+        <p>一颗浑圆饱满的苹果<br>（而我依旧一筹莫展）<br>2025.12.29</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/13.png" alt="" loading="lazy"/>
+        <p>一颗水灵灵的苹果<br>2025.12.30</p>
+    </div>
+
+    <div class="polaroid">
+        <div class="cover"></div>
+        <img src="img/14.png" alt="" loading="lazy"/>
+        <p>一颗有大理石花纹的苹果<br>2025.12.31</p>
     </div>
     <!-- 以上为添加照片的区域 -->
 
@@ -127,80 +141,86 @@ window.onload = function () {
     const photos = document.querySelectorAll('.polaroid');
     let highestZ = 100;
 
-    photos.forEach(el => initPhoto(el));
+    photos.forEach(el => {
+        setRandomPosition(el); // 初始布局
 
-    function initPhoto(el) {
-        // 初始随机位置
-        setRandomPosition(el);
-
-        let isDragging = false;
-        let startX, startY, initialLeft, initialTop;
+        let isMoving = false;
+        let startX, startY, initLeft, initTop;
         let startTime;
 
-        // 处理开始交互（兼容鼠标和手指）
-        const startAction = (e) => {
+        // 统一处理按下事件 (鼠标 & 触摸)
+        const onStart = (e) => {
             if (el.classList.contains('active')) return;
-            
-            const event = e.type.includes('touch') ? e.touches[0] : e;
-            isDragging = false;
+
+            const point = e.touches ? e.touches[0] : e;
+            isMoving = false;
             startTime = Date.now();
+            
+            startX = point.clientX;
+            startY = point.clientY;
+            initLeft = el.offsetLeft;
+            initTop = el.offsetTop;
+
             el.style.zIndex = ++highestZ;
-            el.style.transition = 'none'; // 拖动时关闭动画
+            el.style.transition = 'none'; // 拖拽时立即响应，关闭过渡
 
-            startX = event.clientX;
-            startY = event.clientY;
-            initialLeft = el.offsetLeft;
-            initialTop = el.offsetTop;
-
-            const moveAction = (me) => {
-                const moveEvent = me.type.includes('touch') ? me.touches[0] : me;
-                const dx = moveEvent.clientX - startX;
-                const dy = moveEvent.clientY - startY;
+            // 绑定移动和结束事件到 document
+            const onMove = (me) => {
+                const mp = me.touches ? me.touches[0] : me;
+                const dx = mp.clientX - startX;
+                const dy = mp.clientY - startY;
 
                 if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-                    isDragging = true;
-                    el.style.left = (initialLeft + dx) + 'px';
-                    el.style.top = (initialTop + dy) + 'px';
+                    isMoving = true;
+                    el.style.left = (initLeft + dx) + 'px';
+                    el.style.top = (initTop + dy) + 'px';
                 }
+                
+                // 关键：阻止手机屏幕滚动
+                if (me.cancelable) me.preventDefault();
             };
 
-            const endAction = () => {
-                document.removeEventListener(e.type.includes('touch') ? 'touchmove' : 'mousemove', moveAction);
-                document.removeEventListener(e.type.includes('touch') ? 'touchend' : 'mouseup', endAction);
-                
-                el.style.transition = 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)';
-                
-                // 判断点击还是拖动
-                if (Date.now() - startTime < 250 && !isDragging) {
+            const onEnd = () => {
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onEnd);
+                document.removeEventListener('touchmove', onMove);
+                document.removeEventListener('touchend', onEnd);
+
+                el.style.transition = 'all 0.4s ease'; // 恢复过渡
+
+                // 判定为点击
+                if (Date.now() - startTime < 250 && !isMoving) {
                     toggleZoom(el);
                 }
             };
 
-            document.addEventListener(e.type.includes('touch') ? 'touchmove' : 'mousemove', moveAction, {passive: false});
-            document.addEventListener(e.type.includes('touch') ? 'touchend' : 'mouseup', endAction);
+            document.addEventListener('mousemove', onMove, { passive: false });
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('mouseup', onEnd);
+            document.addEventListener('touchend', onEnd);
         };
 
-        el.addEventListener('mousedown', startAction);
-        el.addEventListener('touchstart', startAction, {passive: false});
-
-        // 放大状态点击缩小
+        // 绑定监听
+        el.addEventListener('mousedown', onStart);
+        el.addEventListener('touchstart', onStart, { passive: false });
+        
+        // 放大状态下的专门点击处理
         el.addEventListener('click', () => {
             if (el.classList.contains('active')) toggleZoom(el);
         });
-    }
+    });
 
     function toggleZoom(el) {
         if (el.classList.contains('active')) {
             el.classList.remove('active');
-            setRandomPosition(el); // 缩小后重新随机位置，避免全部堆叠在中央
+            setRandomPosition(el);
         } else {
-            // 先缩小其他
-            document.querySelectorAll('.polaroid.active').forEach(other => {
-                other.classList.remove('active');
-                setRandomPosition(other);
+            // 先重置其他
+            document.querySelectorAll('.polaroid.active').forEach(item => {
+                item.classList.remove('active');
+                setRandomPosition(item);
             });
-            
-            // 【关键点】放大前清除行内定位，让 CSS 的 left:50% 和 translate 生效
+            // 清除行内样式，激活 CSS 居中逻辑
             el.style.left = '';
             el.style.top = '';
             el.style.transform = '';
@@ -209,15 +229,11 @@ window.onload = function () {
     }
 
     function setRandomPosition(el) {
-        const winW = window.innerWidth;
-        const winH = window.innerHeight;
-        const l = Math.random() * (winW - 150);
-        const t = Math.random() * (winH - 200);
-        const r = (Math.random() - 0.5) * 40;
-        
-        el.style.left = l + 'px';
-        el.style.top = t + 'px';
-        el.style.transform = `rotate(${r}deg)`;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        el.style.left = Math.random() * (w - 150) + 'px';
+        el.style.top = Math.random() * (h - 200) + 'px';
+        el.style.transform = `rotate(${(Math.random() - 0.5) * 40}deg)`;
     }
 };
 </script>
