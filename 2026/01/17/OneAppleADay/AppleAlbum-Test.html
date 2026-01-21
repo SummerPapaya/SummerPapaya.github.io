@@ -22,30 +22,34 @@
             width: 200px; 
             position: absolute;
             cursor: grab;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            /* 平滑过渡：放大和恢复时使用 */
-            transition: width 0.4s ease, transform 0.4s ease, top 0.4s ease, left 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            /* 平滑过渡：放大和随机分布时生效 */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 1;
             user-select: none;
-            -webkit-user-drag: none;
         }
 
         .polaroid img { width: 100%; height: auto; pointer-events: none; }
         .polaroid p { margin-top: 10px; font-size: 12px; color: #333; pointer-events: none; }
 
-        /* 放大状态样式 */
+        /* 覆盖层 */
+        .cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
+
+        /* 【放大状态】强制居中并放大 */
         .polaroid.active {
-            width: 85vw !important;
+            position: fixed !important;
+            width: 80vw !important;
             max-width: 450px !important;
             left: 50% !important;
             top: 50% !important;
-            transform: translate(-50%, -50%) rotate(0deg) !important;
+            /* 必须用 translate 居中，rotate(0) 扶正 */
+            transform: translate(-50%, -50%) rotate(0deg) scale(1.1) !important;
             z-index: 9999 !important;
             cursor: zoom-out;
-            box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.6);
         }
 
-        .cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
+        .polaroid:active { cursor: grabbing; }
     </style>
 </head>
 <body>
@@ -142,16 +146,17 @@ window.onload = function () {
     let highestZ = 100;
 
     photos.forEach(el => {
-        setRandomPosition(el); // 初始布局
+        setRandom(el); // 初始化
 
         let isMoving = false;
         let startX, startY, initLeft, initTop;
         let startTime;
 
-        // 统一处理按下事件 (鼠标 & 触摸)
+        // 通用的交互开始函数
         const onStart = (e) => {
             if (el.classList.contains('active')) return;
 
+            // 获取坐标（兼容手机和电脑）
             const point = e.touches ? e.touches[0] : e;
             isMoving = false;
             startTime = Date.now();
@@ -162,9 +167,8 @@ window.onload = function () {
             initTop = el.offsetTop;
 
             el.style.zIndex = ++highestZ;
-            el.style.transition = 'none'; // 拖拽时立即响应，关闭过渡
+            el.style.transition = 'none'; // 拖动时必须关闭过渡动画
 
-            // 绑定移动和结束事件到 document
             const onMove = (me) => {
                 const mp = me.touches ? me.touches[0] : me;
                 const dx = mp.clientX - startX;
@@ -175,21 +179,19 @@ window.onload = function () {
                     el.style.left = (initLeft + dx) + 'px';
                     el.style.top = (initTop + dy) + 'px';
                 }
-                
-                // 关键：阻止手机屏幕滚动
                 if (me.cancelable) me.preventDefault();
             };
 
             const onEnd = () => {
                 document.removeEventListener('mousemove', onMove);
-                document.removeEventListener('mouseup', onEnd);
                 document.removeEventListener('touchmove', onMove);
+                document.removeEventListener('mouseup', onEnd);
                 document.removeEventListener('touchend', onEnd);
 
-                el.style.transition = 'all 0.4s ease'; // 恢复过渡
+                el.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
 
-                // 判定为点击
-                if (Date.now() - startTime < 250 && !isMoving) {
+                // 【核心判断】：如果按下时间短且没怎么动，则是点击
+                if (Date.now() - startTime < 200 && !isMoving) {
                     toggleZoom(el);
                 }
             };
@@ -200,11 +202,10 @@ window.onload = function () {
             document.addEventListener('touchend', onEnd);
         };
 
-        // 绑定监听
         el.addEventListener('mousedown', onStart);
         el.addEventListener('touchstart', onStart, { passive: false });
-        
-        // 放大状态下的专门点击处理
+
+        // 放大后的缩小点击
         el.addEventListener('click', () => {
             if (el.classList.contains('active')) toggleZoom(el);
         });
@@ -213,27 +214,34 @@ window.onload = function () {
     function toggleZoom(el) {
         if (el.classList.contains('active')) {
             el.classList.remove('active');
-            setRandomPosition(el);
+            setRandom(el); // 缩小后重新随机分布
         } else {
-            // 先重置其他
+            // 1. 关闭其他正在放大的
             document.querySelectorAll('.polaroid.active').forEach(item => {
                 item.classList.remove('active');
-                setRandomPosition(item);
+                setRandom(item);
             });
-            // 清除行内样式，激活 CSS 居中逻辑
+
+            // 2. 【最关键的一步】清除行内样式，让 CSS 的 !important 居中生效
             el.style.left = '';
             el.style.top = '';
             el.style.transform = '';
+            
+            // 3. 强制浏览器重绘
+            void el.offsetWidth;
+            
+            // 4. 激活放大
             el.classList.add('active');
         }
     }
 
-    function setRandomPosition(el) {
+    function setRandom(el) {
         const w = window.innerWidth;
         const h = window.innerHeight;
+        // 随机位置（避免溢出屏幕）
         el.style.left = Math.random() * (w - 150) + 'px';
         el.style.top = Math.random() * (h - 200) + 'px';
-        el.style.transform = `rotate(${(Math.random() - 0.5) * 40}deg)`;
+        el.style.transform = `rotate(${(Math.random() - 0.5) * 60}deg)`;
     }
 };
 </script>
