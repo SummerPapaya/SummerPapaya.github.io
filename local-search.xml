@@ -4,7 +4,40 @@
   
   
   <entry>
-    <title>One Apple A Day [S01]</title>
+    <title>An Apple A Day - 用Vibe Coding搓一个展示墙</title>
+    <link href="/2026/03/31/AnAppleADay-app/"/>
+    <url>/2026/03/31/AnAppleADay-app/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/assets/js/Meting.min.js"></script><center>🍎 “一颗苹果”计划 · 第一季 🍎</center><br><center>“活着其实很好，再吃一颗苹果”<br></center><br><div id="musicPlayerContainer" class="music-player">  <audio id="audioPlayer" src="https://music.163.com/song/media/outer/url?id=1365626644" preload="metadata"></audio>  <div class="album-cover" id="albumCover">    <img src="https://p1.music.126.net/FA-QDERQ1xYgH0IUvv6i4g==/109951168162184684.jpg?param=250y250" alt="专辑封面" id="albumImage">  </div>  <div class="player-controls">    <div class="info-controls-row">      <div class="song-info">        <div class="song-title" id="songTitle">一颗苹果 (Life Live)</div>        <div class="song-artist" id="songArtist">五月天</div>      </div>        <div class="controls">        <div class="play-pause-btn" id="playPauseBtn">          <svg class="icon" viewbox="0 0 24 24" id="playIcon"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>          <svg class="icon" viewbox="0 0 24 24" id="pauseIcon" style="display: none;"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>        </div>                <div class="volume-btn" id="volumeBtn">          <svg class="icon volume-unmuted-icon" viewbox="0 0 24 24"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>          <svg class="icon volume-muted-icon" style="display: none;" viewbox="0 0 24 24"><path fill="currentColor" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>        </div>      </div>    </div>    <div class="progress-container" id="progressContainer">      <div class="progress-bar" id="progressBar"><div class="progress-handle" id="progressHandle"></div></div>    </div>  </div></div><br><br>继续上一篇的“苹果日记”。其实刚开始拍这个“一颗苹果”系列，我想着把当时那一箱苹果吃完就结束，没想到每次给我妈发去当天拍的苹果，她都挺高兴的。于是乎，在每一箱苹果快要吃完的时候，她会再给我寄一箱，还跟直播间的卖家说，我们这是要用来拍照的，麻烦给我们挑点好看的。掐指一算，从去年的十二月中旬到现在（2026.3.31），我竟然已经不间断更新了100+苹果照片。😼<br><br>尝试用Google AI Studio的Gemini搓了一个app来上传和展示这些苹果们，虽然不知道我能坚持多久，但觉得这个“苹果日记”真的是一个无用但挺有意思的小项目。后端的存储总是有点问题，先来测试一下这个相册能不能正常显示（好吧...好像确实显示不了）。照片的存储目前用的是Google旗下Firestore的Base64存储模式，因为在Google Cloud和Firebase Storage创建存储桶的话一定要绑定信用卡，担心会产生莫名其妙的费用，所以先用着免费方案再说。之前创建的GitHub+PicGo图床不知道为什么也一直用不了，不知道要不要部署到阿里云或者腾讯COS试试。<br><br><iframe src="https://ais-dev-t27klszeztwpslvb4hjpay-142949282311.us-west1.run.app/?embed=true" width="100%" height="600px" frameborder="0" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></iframe><br><br>目前应该长下面这样，在上一条中的拍立得照片墙的基础上增加了上传照片的入口和日历显示模式，并调整了UI。但好像每次重启，上传的图片和说明就会消失，容我再研究研究。🫠<br><br><div align="center">    <img src="/2026/03/31/AnAppleADay-app/img/照片上传日历.png" width="80%" height="80%">    <br>    <p style="color: #888888; font-size: 12px; margin-top: 10px;">        <i>照片上传日历</i>    </p></div><br><div align="center">    <img src="/2026/03/31/AnAppleADay-app/img/照片上传日历-点击时交互效果.png" width="80%" height="80%">    <br>    <p style="color: #888888; font-size: 12px; margin-top: 10px;">        <i>照片上传日历-指向具体日期交互效果</i>    </p></div><br><div align="center">    <img src="/2026/03/31/AnAppleADay-app/img/上传照片的对话框.png" width="80%" height="80%">    <br>    <p style="color: #888888; font-size: 12px; margin-top: 10px;">        <i>照片上传+编辑界面</i>    </p></div><br><div align="center">    <img src="/2026/03/31/AnAppleADay-app/img/保存照片后的上传日历.png" width="80%" height="80%">    <br>    <p style="color: #888888; font-size: 12px; margin-top: 10px;">        <i>保存后的照片上传日历</i>    </p></div><br><div align="center">    <img src="/2026/03/31/AnAppleADay-app/img/照片墙-悬挂略缩图模式.png" width="80%" height="80%">    <br>    <p style="color: #888888; font-size: 12px; margin-top: 10px;">        <i>展示照片墙-悬挂略缩图模式</i>    </p></div><br><div align="center">    <img src="/2026/03/31/AnAppleADay-app/img/照片墙-宝丽来模式.png" width="80%" height="80%">    <br>    <p style="color: #888888; font-size: 12px; margin-top: 10px;">        <i>展示照片墙-拍立得照片墙模式</i>    </p></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>实验室</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Test</tag>
+      
+      <tag>小火花儿</tag>
+      
+      <tag>一颗苹果</tag>
+      
+      <tag>Vibe Coding</tag>
+      
+      <tag>AI Lab</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>An Apple A Day [S01]</title>
     <link href="/2026/01/17/OneAppleADay/"/>
     <url>/2026/01/17/OneAppleADay/</url>
     
@@ -23,6 +56,8 @@
       <tag>小火花儿</tag>
       
       <tag>一颗苹果</tag>
+      
+      <tag>HTML</tag>
       
     </tags>
     
