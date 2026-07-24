@@ -6,7 +6,7 @@
 
 [![Live Site](https://img.shields.io/badge/🌐_访问小镇-www.summercommences.com-2F4154?style=flat-square)](https://www.summercommences.com)
 [![RSS](https://img.shields.io/badge/RSS-Atom_Feed-FFA95C?style=flat-square&logo=rss&logoColor=white)](https://www.summercommences.com/atom.xml)
-[![Podcast](https://img.shields.io/badge/🎧_播客-夏天镇 SummerTown-E2693A?style=flat-square)](https://www.xiaoyuzhoufm.com/podcast/6553548956431ed02df2c1c4)
+[![Podcast](https://img.shields.io/badge/🎧_播客-夏天镇_SummerTown-E2693A?style=flat-square)](https://www.xiaoyuzhoufm.com/podcast/6553548956431ed02df2c1c4)
 [![Podcast](https://img.shields.io/badge/🎧_播客-风铃屿_Windbell_Isle-E2693A?style=flat-square)](https://www.xiaoyuzhoufm.com/podcast/697b5920ea396c6d6ffa2bc9)
 [![Hexo](https://img.shields.io/badge/Hexo-8.1.1-0E83CD?style=flat-square&logo=hexo&logoColor=white)](https://hexo.io)
 [![Fluid Theme](https://img.shields.io/badge/Theme-Fluid_1.9.8-FF7CAB?style=flat-square)](https://github.com/fluid-dev/hexo-theme-fluid)
